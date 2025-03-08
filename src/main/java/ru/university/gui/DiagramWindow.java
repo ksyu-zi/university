@@ -13,12 +13,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DiagramWindow extends JFrame {
+public class DiagramWindow extends JInternalFrame {
     public DiagramWindow() {
         setTitle("Диаграмма");
-        setSize(500, 400);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(300, 250);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
 
         DefaultPieDataset<String> dataset = getPieDataset();
 

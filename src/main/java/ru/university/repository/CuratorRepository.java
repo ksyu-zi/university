@@ -58,6 +58,14 @@ public class CuratorRepository implements Repository<Curator> {
     }
 
     @Override
+    public void edit(Curator entity) {
+        Curator currentCurator = curators.stream().filter(c -> c.getId() == entity.getId()).findFirst().orElseThrow();
+        currentCurator.setSurname(entity.getSurname());
+        currentCurator.setName(entity.getName());
+        saveAll();
+    }
+
+    @Override
     public void delete(long id) {
         curators.stream().filter(c -> c.getId() == id)
                 .findFirst().map(curators::remove);
@@ -80,5 +88,10 @@ public class CuratorRepository implements Repository<Curator> {
     @Override
     public List<Curator> list() {
         return curators;
+    }
+
+    @Override
+    public long getCurId() {
+        return list().get(list().size() - 1).getId();
     }
 }

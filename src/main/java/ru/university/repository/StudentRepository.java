@@ -3,6 +3,7 @@ package ru.university.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.university.model.Curator;
 import ru.university.model.Group;
 import ru.university.model.Student;
 
@@ -59,6 +60,16 @@ public class StudentRepository implements Repository<Student> {
     }
 
     @Override
+    public void edit(Student entity) {
+        Student currentStudent = students.stream().filter(c -> c.getId() == entity.getId()).findFirst().orElseThrow();
+        currentStudent.setSurname(entity.getSurname());
+        currentStudent.setName(entity.getName());
+        currentStudent.setGender(String.valueOf(entity.getGender()));
+        currentStudent.setGroupId(entity.getGroupId());
+        saveAll();
+    }
+
+    @Override
     public void delete(long id) {
         students.stream().filter(s -> s.getId() == id)
                 .findFirst().map(students::remove);
@@ -81,5 +92,10 @@ public class StudentRepository implements Repository<Student> {
     @Override
     public List<Student> list() {
         return students;
+    }
+
+    @Override
+    public long getCurId() {
+        return list().get(list().size() - 1).getId();
     }
 }
